@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "8-Condicionais2", "8-Condic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "9-Escopo", "9-Escopo\9-Escopo.csproj", "{7A514E10-A60C-47D6-876E-79DEFA8817C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LacoDeRepeticaoFor", "LacoDeRepeticaoFor\LacoDeRepeticaoFor.csproj", "{F35A41FC-7AE4-4614-906B-BFC04C8A9348}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10-LacoDeRepeticaoFor", "LacoDeRepeticaoFor\10-LacoDeRepeticaoFor.csproj", "{F35A41FC-7AE4-4614-906B-BFC04C8A9348}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
