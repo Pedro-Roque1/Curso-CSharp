@@ -1,11 +1,13 @@
 ﻿
+using System;
+
 namespace ByteBankExceptions
 {
     public class ContaCorrente
     {
         public Cliente Titular { get; set; }
-        public int Agencia;
-        public int Numero;
+        public int Agencia { get; }
+        public int Numero { get; }
         private double _saldo = 100;
 
         public static double TaxaOperacao { get; private set; }
@@ -14,6 +16,9 @@ namespace ByteBankExceptions
 
         public ContaCorrente(int agencia, int numero)
         {
+            if (agencia <= 0) throw new ArgumentException("Agencia deve ser maior que 0" , nameof(agencia));
+            if (numero <= 0) throw new ArgumentException("Numero da conta deve ser maior que 0 ",nameof(numero));
+            
             Agencia = agencia;
             Numero = numero;
             TaxaOperacao = 30 / TotalDeContasCriadas;

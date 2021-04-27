@@ -10,54 +10,20 @@ namespace ByteBankExceptions
     {
         static void Main(string[] args)
         {
-
             try
             {
-                Metodo();
+                ContaCorrente conta = new ContaCorrente(-10, 0);
             }
-            catch (DivideByZeroException ex)
+            catch (ArgumentException e)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.ParamName);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-           
+
+
             Console.ReadLine();
 
         }
-        public static int Dividir(int numero, int divisor)
-        {
-            ContaCorrente conta = null;
-            //Console.WriteLine(conta.Saldo);
-            try
-            {
-                return numero / divisor;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Exceção com numero=" + numero + " e divisor=" + divisor);
-                throw;
-            }
-        }
-        static void Metodo()
-        {
-            try
-            {
-                TestaDivisao(0);
-            }
-            catch (NullReferenceException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-            
-        }
-        static void TestaDivisao(int divisor)
-        {
-            Dividir(10, divisor);
-        }
     }
+        
 }
