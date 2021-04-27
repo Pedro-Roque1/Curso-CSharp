@@ -8,12 +8,15 @@ namespace _07_ByteBank
         public int Numero;
         private double _saldo = 100;
 
+        public static double TaxaOperacao { get; private set; }
+
         public static int TotalDeContasCriadas { get; private set; }
 
         public ContaCorrente(int agencia, int numero)
         {
             Agencia = agencia;
             Numero = numero;
+            TaxaOperacao = 30 / TotalDeContasCriadas;
 
             TotalDeContasCriadas++;
         }
