@@ -1,4 +1,5 @@
 ﻿
+using ByteBankException;
 using System;
 
 namespace ByteBankExceptions
@@ -8,6 +9,7 @@ namespace ByteBankExceptions
         public Cliente Titular { get; set; }
         public int Agencia { get; }
         public int Numero { get; }
+
         private double _saldo = 100;
 
         public static double TaxaOperacao { get; private set; }
@@ -21,9 +23,9 @@ namespace ByteBankExceptions
             
             Agencia = agencia;
             Numero = numero;
+            TotalDeContasCriadas++;
             TaxaOperacao = 30 / TotalDeContasCriadas;
 
-            TotalDeContasCriadas++;
         }
 
         public double Saldo
@@ -39,31 +41,34 @@ namespace ByteBankExceptions
             }
         }
 
-        public bool Sacar(double valor)
+        public void Sacar(double valor)
         {
+            if (valor < 0)
+            {
+                throw new ArgumentException("Valor inválido", nameof(valor));
+            }
             if (_saldo < valor)
             {
-                return false;
+                 throw new SaldoInsuficienteException(Saldo,valor);
 
             }
             _saldo -= valor;
-            return true;
+            
         }
 
         public void Depositar(double valor)
         {
             _saldo += valor;
         }
-        public bool Transferir(double valor, ContaCorrente contaDestino)
+        public void Transferir(double valor, ContaCorrente contaDestino)
         {
-            if (_saldo < valor)
+            if (valor< 0)
             {
-                return false;
+                throw new ArgumentException("Valor inválido para transferencia!", nameof(valor));
             }
 
-            _saldo -= valor;
+            Sacar (valor);
             contaDestino.Depositar(valor);
-            return true;
 
         }
     }

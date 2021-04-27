@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ByteBankException;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,18 +13,29 @@ namespace ByteBankExceptions
         {
             try
             {
-                ContaCorrente conta = new ContaCorrente(-10, 0);
+                ContaCorrente conta = new ContaCorrente(456, 5401);
+                ContaCorrente conta2 = new ContaCorrente(485, 456478);
+                conta2.Transferir(-10, conta);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException ex)
             {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.ParamName);
+                Console.WriteLine("Argumento com problema: " + ex.ParamName);
+                Console.WriteLine("Ocorreu uma exceção do tipo ArgumentException");
+                Console.WriteLine(ex.Message);
+            }
+            catch (SaldoInsuficienteException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Exceção do tipo SaldoInsuficienteException");
             }
 
 
-            Console.ReadLine();
 
+            Console.WriteLine("Execução finalizada. Tecle enter para sair");
+            Console.ReadLine();
         }
+
     }
-        
 }
+
+
