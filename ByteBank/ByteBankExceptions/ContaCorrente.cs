@@ -10,6 +10,9 @@ namespace ByteBankExceptions
         public int Agencia { get; }
         public int Numero { get; }
 
+        public int ContadorDeSaquesNaoPermitidos { get; private set; }
+        public int ContadorTransferenciasNaoPermitidas { get; private set; }
+
         private double _saldo = 100;
 
         public static double TaxaOperacao { get; private set; }
@@ -49,6 +52,7 @@ namespace ByteBankExceptions
             }
             if (_saldo < valor)
             {
+                ContadorDeSaquesNaoPermitidos++;
                  throw new SaldoInsuficienteException(Saldo,valor);
 
             }
@@ -64,7 +68,18 @@ namespace ByteBankExceptions
         {
             if (valor< 0)
             {
+                ContadorTransferenciasNaoPermitidas++;
                 throw new ArgumentException("Valor inválido para transferencia!", nameof(valor));
+
+            }
+            try
+            {
+                Sacar(valor);
+            }
+            catch (SaldoInsuficienteException ex)
+            {
+                ContadorTransferenciasNaoPermitidas++;
+                throw new OperacaoFinanceiraException("Operação não realizada", ex);
             }
 
             Sacar (valor);
