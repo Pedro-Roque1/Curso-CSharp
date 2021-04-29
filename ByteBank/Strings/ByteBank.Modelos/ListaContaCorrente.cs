@@ -7,19 +7,25 @@ using System.Threading.Tasks;
 
 namespace ByteBank.SistemaAgencia
 {
-    public class ListaDeContaCorrente
+    public class Lista<T>
     {
-        private ContaCorrente[] _itens;
+        private T[] _itens;
         private int _proximaPosicao;
-        
 
-        public ListaDeContaCorrente(int capacidadeInicial = 5)
+        public int Tamanho
         {
-            _itens = new ContaCorrente[capacidadeInicial];
+            get
+            {
+                return _proximaPosicao;
+            }
+        }
+        public Lista(int capacidadeInicial = 5)
+        {
+            _itens = new T[capacidadeInicial];
             _proximaPosicao = 0;
         }
 
-        public void Adicionar(ContaCorrente item)
+        public void Adicionar(T item)
         {
             VerificarCapacidade(_proximaPosicao + 1);
 
@@ -27,6 +33,16 @@ namespace ByteBank.SistemaAgencia
 
             _itens[_proximaPosicao] = item;
             _proximaPosicao++;
+        }
+
+        public T GetItemNoIndice(int indice)
+        {
+            if (indice < 0 || indice >= _proximaPosicao)
+            {
+                throw new ArgumentOutOfRangeException(nameof(indice));
+            }
+
+            return _itens[indice];
         }
 
 
@@ -47,7 +63,7 @@ namespace ByteBank.SistemaAgencia
 
             Console.WriteLine("Aumentando capacidade da lista!");
 
-            ContaCorrente[] novoArray = new ContaCorrente[novoTamanho];
+            T[] novoArray = new T[novoTamanho];
 
             for (int indice = 0; indice < _itens.Length; indice++)
             {
@@ -60,7 +76,7 @@ namespace ByteBank.SistemaAgencia
         }
         public void listaContas()
         {
-            foreach (ContaCorrente conta in _itens)
+            foreach (T conta in _itens)
             {
                 if (conta != null)
                 {
@@ -69,11 +85,18 @@ namespace ByteBank.SistemaAgencia
             }
                 
         }
-        public void Remover(ContaCorrente contaCorrente)
+        public void Remover(T T)
         {
             for (var i = 0; i < _itens.Length; i++)
-                if (_itens[i] != null && _itens[i].Equals(contaCorrente))
-                    _itens[i] = null;
+                if (_itens[i] != null && _itens[i].Equals(T)) ;
+                    //_itens[i] = null;
+        }
+        public T this[int indice]
+        {
+            get
+            {
+                return GetItemNoIndice(indice);
+            }
         }
     }
 }
