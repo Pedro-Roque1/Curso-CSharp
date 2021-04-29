@@ -14,24 +14,14 @@ namespace ByteBank.SistemaAgencia
         
         static void Main(string[] args)
         {
-            ContaCorrente[] contas = new ContaCorrente[]
-            {
-                    new ContaCorrente(874, 5679787),
-                    new ContaCorrente(874, 4456668),
-                    new ContaCorrente(874, 7781438),
-                    new ContaCorrente(874, 7781438),
-                    new ContaCorrente(874, 7781438),
-        };
-            
-            
-            
-            
-            
+            ListaDeContaCorrente lista = new ListaDeContaCorrente();
+            lista.Adicionar(new ContaCorrente(456, 7889));
+            lista.Adicionar(new ContaCorrente(451, 78859));
+            lista.Adicionar(new ContaCorrente(455, 78589));
+            lista.Adicionar(new ContaCorrente(455, 78589));
+            lista.Adicionar(new ContaCorrente(455, 78589));
+            lista.Adicionar(new ContaCorrente(455, 78589));
 
-            foreach ( ContaCorrente conta in contas)
-            {
-                Console.WriteLine($"Conta atual :  Agencia: { conta.Agencia}  Numero:{conta.Numero}");
-            } 
             Console.ReadLine();
         }
        
@@ -43,7 +33,7 @@ namespace ByteBank.SistemaAgencia
        
 
      
-    }
+}
 
 
 
