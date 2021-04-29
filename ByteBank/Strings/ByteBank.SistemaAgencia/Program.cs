@@ -13,18 +13,25 @@ namespace ByteBank.SistemaAgencia
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Olá, mundo!");
-            Console.WriteLine(123);
-            Console.WriteLine(10.5);
-            Console.WriteLine(true);
+            Cliente cliente_1 = new Cliente();
+            cliente_1.Nome = "Carlos";
+            cliente_1.CPF = "458.623.120-03";
+            cliente_1.Profissao = "Designer";
 
-            object conta = new ContaCorrente(456, 687876);
-            Console.WriteLine(conta);
-            string contaToString = conta.ToString();
-            Console.WriteLine(contaToString);
-            
-            object desenvolvedor = new Desenvolvedor("4564654");
-            Console.WriteLine(desenvolvedor);
+            Cliente cliente_2 = new Cliente();
+            cliente_2.Nome = "Carlos";
+            cliente_2.CPF = "458.624.120-03";
+            cliente_2.Profissao = "Designer";
+
+
+            if (cliente_2.Equals(cliente_1))
+            {
+                Console.WriteLine("Iguais");
+            }
+            else
+            {
+                Console.WriteLine("Não Iguais");
+            }
 
             Console.ReadLine();
 
