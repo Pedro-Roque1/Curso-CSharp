@@ -14,28 +14,24 @@ namespace ByteBank.SistemaAgencia
         
         static void Main(string[] args)
         {
-            double[] idades = new double[5];
-
-            idades[0] = 15;
-            idades[1] = 28;
-            idades[2] = 35;
-            idades[3] = 50;
-            idades[4] = 28;
-
-            double acumulador = 0;
-            for (int indice = 0; indice <= 4; indice++)
+            ContaCorrente[] contas = new ContaCorrente[]
             {
-                double idade = idades[indice];
-
-                Console.WriteLine($"Acessando o array idades no índice {indice}");
-                Console.WriteLine($"Valor de idades[{indice}] = {idade}");
-
-                acumulador += idade;
-            }
-
-            double divisao = acumulador / idades.Length;
-            Console.WriteLine(divisao);
+                    new ContaCorrente(874, 5679787),
+                    new ContaCorrente(874, 4456668),
+                    new ContaCorrente(874, 7781438),
+                    new ContaCorrente(874, 7781438),
+                    new ContaCorrente(874, 7781438),
+        };
             
+            
+            
+            
+            
+
+            foreach ( ContaCorrente conta in contas)
+            {
+                Console.WriteLine($"Conta atual :  Agencia: { conta.Agencia}  Numero:{conta.Numero}");
+            } 
             Console.ReadLine();
         }
        
