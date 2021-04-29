@@ -18,6 +18,7 @@ namespace ByteBank.Modelos
             return
                 CPF == outroCliente.CPF;
         }
+        
     }
     
 }

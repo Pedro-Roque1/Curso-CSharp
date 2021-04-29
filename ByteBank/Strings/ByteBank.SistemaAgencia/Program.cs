@@ -11,33 +11,37 @@ namespace ByteBank.SistemaAgencia
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
-            Cliente cliente_1 = new Cliente();
-            cliente_1.Nome = "Carlos";
-            cliente_1.CPF = "458.623.120-03";
-            cliente_1.Profissao = "Designer";
+            double[] idades = new double[5];
 
-            Cliente cliente_2 = new Cliente();
-            cliente_2.Nome = "Carlos";
-            cliente_2.CPF = "458.624.120-03";
-            cliente_2.Profissao = "Designer";
+            idades[0] = 15;
+            idades[1] = 28;
+            idades[2] = 35;
+            idades[3] = 50;
+            idades[4] = 28;
 
-
-            if (cliente_2.Equals(cliente_1))
+            double acumulador = 0;
+            for (int indice = 0; indice <= 4; indice++)
             {
-                Console.WriteLine("Iguais");
-            }
-            else
-            {
-                Console.WriteLine("Não Iguais");
+                double idade = idades[indice];
+
+                Console.WriteLine($"Acessando o array idades no índice {indice}");
+                Console.WriteLine($"Valor de idades[{indice}] = {idade}");
+
+                acumulador += idade;
             }
 
+            double divisao = acumulador / idades.Length;
+            Console.WriteLine(divisao);
+            
             Console.ReadLine();
-
-
-
         }
+       
+
+
+    }
 
 
        
@@ -46,6 +50,6 @@ namespace ByteBank.SistemaAgencia
     }
 
 
-}
+
 
 
