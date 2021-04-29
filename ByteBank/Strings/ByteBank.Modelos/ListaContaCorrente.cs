@@ -11,6 +11,7 @@ namespace ByteBank.SistemaAgencia
     {
         private ContaCorrente[] _itens;
         private int _proximaPosicao;
+        
 
         public ListaDeContaCorrente(int capacidadeInicial = 5)
         {
@@ -27,6 +28,8 @@ namespace ByteBank.SistemaAgencia
             _itens[_proximaPosicao] = item;
             _proximaPosicao++;
         }
+
+
 
 
         private void VerificarCapacidade(int tamanhoNecessario)
@@ -55,6 +58,22 @@ namespace ByteBank.SistemaAgencia
             _itens = novoArray;
 
         }
-
+        public void listaContas()
+        {
+            foreach (ContaCorrente conta in _itens)
+            {
+                if (conta != null)
+                {
+                    Console.WriteLine(conta);
+                }
+            }
+                
+        }
+        public void Remover(ContaCorrente contaCorrente)
+        {
+            for (var i = 0; i < _itens.Length; i++)
+                if (_itens[i] != null && _itens[i].Equals(contaCorrente))
+                    _itens[i] = null;
+        }
     }
 }

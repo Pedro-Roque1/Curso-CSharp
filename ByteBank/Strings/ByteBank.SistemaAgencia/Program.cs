@@ -15,14 +15,25 @@ namespace ByteBank.SistemaAgencia
         static void Main(string[] args)
         {
             ListaDeContaCorrente lista = new ListaDeContaCorrente();
-            lista.Adicionar(new ContaCorrente(456, 7889));
-            lista.Adicionar(new ContaCorrente(451, 78859));
-            lista.Adicionar(new ContaCorrente(455, 78589));
-            lista.Adicionar(new ContaCorrente(455, 78589));
-            lista.Adicionar(new ContaCorrente(455, 78589));
-            lista.Adicionar(new ContaCorrente(455, 78589));
+            
+            ContaCorrente conta = new ContaCorrente(77777777, 7777777);
+            lista.Adicionar(conta);
+            lista.listaContas();
+            lista.Remover(conta);
+            Console.WriteLine("removido");
+            lista.listaContas();
 
             Console.ReadLine();
+
+            var a = true ? 1 : 0;
+
+            String numeroAlt = null;
+            var numeroAlt1 = numeroAlt != null ? numeroAlt.Substring(0, 2) : "";
+            var numeroAlt2 = numeroAlt?.Substring(0, 2).ToUpper();
+
+            int? numero = null;
+            var numero1 = numero != null ? numero * 2 : 0 * 2;
+            var numero2 = (numero ?? 0) * 2;
         }
        
 
