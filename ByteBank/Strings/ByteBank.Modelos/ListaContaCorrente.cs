@@ -74,6 +74,13 @@ namespace ByteBank.SistemaAgencia
             _itens = novoArray;
 
         }
+        public void AdicionarVarios(params T[] itens)
+        {
+            foreach (T item in itens)
+            {
+                Adicionar(item);
+            }
+        }
         public void listaContas()
         {
             foreach (T conta in _itens)
