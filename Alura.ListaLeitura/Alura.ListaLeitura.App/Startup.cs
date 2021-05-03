@@ -1,19 +1,56 @@
-﻿using Alura.ListaLeitura.App.Repositorio;
+﻿using Alura.ListaLeitura.App.Negocio;
+using Alura.ListaLeitura.App.Repositorio;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App
 {
     public class Startup
     {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddRouting();//Minha aplicação está usando o serviço de roteamento do Core
+        }
+        
         public void Configure(IApplicationBuilder app)
         {
-            app.Run(Roteamento);
-
-
+            // Roteamento do Asp.NETCore
+            var builder = new RouteBuilder(app);
+            builder.MapRoute("Livros/ParaLer", LivrosParaLer);
+            builder.MapRoute("Livros/Lendo", LivrosLidos);
+            builder.MapRoute("Livros/Lidos", LivrosLendo);
+            builder.MapRoute("Cadastro/novoLivro/{nome}/{autor}", NovoLivroParaLer);
+            builder.MapRoute("Livros/Detalhes/{id:int}",ExibeDetalhes);
+            var rotas = builder.Build();//constroi as rotas
+            app.UseRouter(rotas);
         }
+
+        private Task ExibeDetalhes(HttpContext context)
+        {
+            int id = Convert.ToInt32(context.GetRouteValue("id"));
+            var repo = new LivroRepositorioCSV();
+            var livro = repo.Todos.First(l => l.Id == id);
+            return context.Response.WriteAsync(livro.Detalhes());
+        }
+
+        private Task NovoLivroParaLer(HttpContext context)
+        {
+            var livro = new Livro()
+            {
+                Titulo = Convert.ToString(context.GetRouteValue("nome")),
+                Autor = Convert.ToString(context.GetRouteValue("autor")),
+            };
+            var repo = new LivroRepositorioCSV();
+            repo.Incluir(livro);
+            return context.Response.WriteAsync("O Livro foi adicionado com sucesso!");
+        }
+
         public Task Roteamento (HttpContext context)
         {
             var _repo = new LivroRepositorioCSV();
