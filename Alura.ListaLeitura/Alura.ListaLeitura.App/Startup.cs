@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace Alura.ListaLeitura.App
 {
@@ -27,10 +29,40 @@ namespace Alura.ListaLeitura.App
             builder.MapRoute("Livros/Lidos", LivrosLendo);
             builder.MapRoute("Cadastro/novoLivro/{nome}/{autor}", NovoLivroParaLer);
             builder.MapRoute("Livros/Detalhes/{id:int}",ExibeDetalhes);
+            builder.MapRoute("Cadastro/NovoLivro", ExibeFormulario);
+            builder.MapRoute("Cadastro/Incluir", ProcessaFormulario);
             var rotas = builder.Build();//constroi as rotas
             app.UseRouter(rotas);
         }
 
+        private Task ProcessaFormulario(HttpContext context)
+        {
+            var livro = new Livro()
+            {
+                Titulo = context.Request.Form["titulo"].First(),
+                Autor = context.Request.Form["autor"].First(),
+            };
+            var repo = new LivroRepositorioCSV();
+            repo.Incluir(livro);
+            return context.Response.WriteAsync("O Livro foi adicionado com sucesso!");
+        }
+
+
+
+        private string CarregaArquivoHTML(string nomeArquivo)
+        {
+            var nomeCompletoArquivo = $"HTML/{nomeArquivo}.html";
+            using (var arquivo = File.OpenText(nomeCompletoArquivo))
+            {
+                return arquivo.ReadToEnd();
+            }
+        }
+
+        private Task ExibeFormulario(HttpContext context)
+        {
+            var html = CarregaArquivoHTML("formulario");
+            return context.Response.WriteAsync(html);
+        }
         private Task ExibeDetalhes(HttpContext context)
         {
             int id = Convert.ToInt32(context.GetRouteValue("id"));
@@ -51,32 +83,16 @@ namespace Alura.ListaLeitura.App
             return context.Response.WriteAsync("O Livro foi adicionado com sucesso!");
         }
 
-        public Task Roteamento (HttpContext context)
-        {
-            var _repo = new LivroRepositorioCSV();
-            var caminhosAtendidos = new Dictionary<string, RequestDelegate>
-            {
-                {"/Livros/ParaLer", LivrosParaLer},
-                {"/Livros/Lendo", LivrosLidos },
-                {"/Livros/Lidos", LivrosLendo },
-               
-            };
-            if (caminhosAtendidos.ContainsKey(context.Request.Path))
-            {
-                var metodo = caminhosAtendidos[context.Request.Path];
-                return metodo.Invoke(context);
-            }
-
-            context.Response.StatusCode = 404;
-            
-            return context.Response.WriteAsync("Caminho inexistente!");
-            
-        }
-
         public Task LivrosParaLer(HttpContext context)
         {
             var _repo = new LivroRepositorioCSV();
-            return context.Response.WriteAsync(_repo.ParaLer.ToString());
+            var conteudodoArquivo = CarregaArquivoHTML("para-ler");
+            foreach (var livro in _repo.ParaLer.Livros)
+            {
+                conteudodoArquivo = conteudodoArquivo.Replace("#NOVO-ITEM#", $"<li>{livro.Titulo} - {livro.Autor}</li> #NOVO-ITEM#");
+            }
+            conteudodoArquivo = conteudodoArquivo.Replace("#NOVO-ITEM#", "");
+            return context.Response.WriteAsync(conteudodoArquivo);
         }
         public Task LivrosLendo(HttpContext context)
         {
