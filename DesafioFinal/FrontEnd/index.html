@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/animate.min.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  </head>
-  <body>
+</head>
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">API POSTS 2.0</a>
-      
-        <form class="form-inline" id="pesquisa">
-            <input v-model="busca" class="form-control mr-sm-2" type="search" placeholder="Search">
-            <button type="button" class="btn btn-success">pesquisar</button>
-        </form>
-                  
-    </div>
-    </nav>
-    
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">API POSTS 2.0</a>
 
-    
-    <div class="list-group" id="listagem">
-        <a v-for="post in lista"
-           class="list-group-item"
-           :href="'descricao.html?id=' + post.id">
-            <h6>{{ post.id }} - {{ post.titulo }}</h6>
-        </a>
+        </div>
+    </nav>
+
+    <div id="app">
+
+        <div class="form-inline">
+            <input v-model="busca" class="form-control" v-on:keyup="loadDados">
+        </div>
+
+
+        <div class="list-group" id="listagem">
+            <a v-for="post in lista"
+               class="list-group-item"
+               :href="'descricao.html?id=' + post.id">
+                <h6>{{ post.id }} - {{ post.titulo }}</h6>
+            </a>
+        </div>
     </div>
+
     <script src="js/index.js"></script>
-  </body>
+</body>
 </html>
