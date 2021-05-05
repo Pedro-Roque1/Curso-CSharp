@@ -10,11 +10,21 @@ namespace DesafioFinal
 {
     public class PostsController: Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string id)
         {
             var posts = PostsCSV.Carregar();
+            
 
+            if (!String.IsNullOrEmpty(id))
+            {
+                var busca = posts.Where(po => po.Titulo.Contains(id) || po.Texto.Contains(id));
+                return Ok(busca);
+            }
             return Ok(posts);
+           
+            
+
+
         }
         public IActionResult Show(int id)
         {
@@ -25,5 +35,7 @@ namespace DesafioFinal
 
             return Ok(post);
         }
+        
+      
     }
 }
